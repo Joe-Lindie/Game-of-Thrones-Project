@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Game of Thrones Project</title>
-  </head>
-  <body>
-    <main>
-      <h1>Game of Thrones Lovers!</h1>
-      <p>Find information about your favourite Game of Thrones characters!</p>
 
-      <form action="">
-        <label for="character_name">GoT Character:</label>
-        <input
-          id="character_name"
-          type="text"
-          placeholder="Character Name..."
-          name="character_name"
-          required
-        />
-        <button id="submit_button">Find</button>
-      </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Game of Thrones Project</title>
+</head>
 
-      <section class="container" id="GoT_information"></section>
-    </main>
-    <script src="main.js"></script>
-  </body>
+<body>
+  <main>
+    <h1>Game of Thrones Lovers!</h1>
+    <p>Find information about your favourite Game of Thrones characters!</p>
+
+    <form action="">
+      <label for="character_name">GoT Character:</label>
+      <input id="character_name" type="text" placeholder="Character Name..." name="character_name" required />
+      <button id="submit_button">Find</button>
+    </form>
+    <section class="container" id="GoT_information"></section>
+    <section class="container" id="TMDB_information">
+      <div class="RL_info_container" id="RL_info"></div>
+      <div class="Movie_info_container" id="Movie_info"></div>
+    </section>
+  </main>
+  <script src="main.js"></script>
+</body>
+
 </html>
