@@ -19,62 +19,43 @@ form.addEventListener("submit", (event) => {
     .then((response) => response.json())
 
     .then((GoT) => {
-      console.log(GoT)
+      // LOOP THROUGH DIFFERENT ARRAYS FOR REAL NAME AND CULTURE
       for (let i = 0; i < GoT.length; i++) {
         if (GoT[i]["playedBy"][0].length > 1) {
           realName = GoT[i]["playedBy"][0]
         }
+
+        if (GoT[i]["culture"].length > 1) {
+          gameOfThrones_culture = GoT[i]["culture"]
+        }
       }
-      // const realName = GoT[0].playedBy[0]
+
       const gameOfThrones_character = GoT[0].name
       const gameOfThrones_DOB = GoT[0].born
       const gameOfThrones_title = GoT[0].titles.slice(-1)
-      const gameOfThrones_culture = GoT[0].culture
 
       // ACTOR'S / ACTRESS'S REAL NAME
-      const newNameEl = document.createElement("p")
-      const nodeName = document.createTextNode(
-        `${gameOfThrones_character} is played by ${realName}`
-      )
-
-      newNameEl.appendChild(nodeName)
-      gameOfThrones_data.appendChild(newNameEl)
-
       // CHARACTER'S DATE OF BIRTH
-      const newDOBEl = document.createElement("p")
-      const nodeDOB = document.createTextNode(
-        `${gameOfThrones_character}'s was born ${gameOfThrones_DOB}`
-      )
-      newDOBEl.appendChild(nodeDOB)
-      gameOfThrones_data.appendChild(newDOBEl)
-
       // CHARACTER'S TITLE
-      const newtitleEl = document.createElement("p")
-      const nodeTitle = document.createTextNode(`${gameOfThrones_title}`)
-      newtitleEl.appendChild(nodeTitle)
-      gameOfThrones_data.appendChild(newtitleEl)
-
       // CHARACTER'S CULTURE
-      const newCultureEl = document.createElement("p")
-      const nodeCulture = document.createTextNode(
-        `Is from the ${gameOfThrones_culture}'s culture`
-      )
-      newCultureEl.appendChild(nodeCulture)
-      gameOfThrones_data.appendChild(newCultureEl)
-
       // FIND OUT MORE ABOUT CHARACTER
-      const moreInfo = document.createElement("p")
-      const nodeInfo = document.createTextNode(
-        `Find out more about ${gameOfThrones_character}`
+
+      const nameEl = document.createElement("p")
+      nameEl.className = "character_introduction"
+      const nameNode = document.createTextNode(
+        `${gameOfThrones_character} was played by ${realName}. 
+        ${gameOfThrones_character} was born ${gameOfThrones_DOB}. 
+        From the ${gameOfThrones_culture}'s culture and ${gameOfThrones_title}. 
+        Let's learn more about ${realName} rise to fame!`
       )
-      moreInfo.appendChild(nodeInfo)
-      gameOfThrones_data.appendChild(moreInfo)
+
+      nameEl.appendChild(nameNode)
+      gameOfThrones_data.appendChild(nameEl)
 
       // get the ID from real Name
       fetch(`${search_person}${realName}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
           actorId = data["results"][0]["id"]
 
           getPersonDetailByTMDB(actorId)

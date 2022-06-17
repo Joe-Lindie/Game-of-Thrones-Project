@@ -1,0 +1,60 @@
+/* BASIC STYLING FOR ALL ELEMENTS */
+html {
+    box-sizing: border-box;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Roboto', sans-serif;
+    padding: 0.5rem;
+  }
+
+  /* MOBILE STYLING FOR 375 X 667 (IPHONE-SE) */
+
+  h1,
+  .intro {
+    text-align:  center;
+    padding-top: 1rem; 
+    font-weight: 400;
+  }
+
+  p {
+    line-height: 1.5rem;
+    font-weight: 300;
+  }
+
+  .intro {
+    font-weight: 300;
+  }
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.user_input {
+    margin: 1.5rem 0;
+    padding: 0.2rem 1rem;
+    border-radius: 10px;
+}
+
+#submit_button {
+    padding: 0.2rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.character_introduction {
+    text-align: center;
+}
+
+  
+  
