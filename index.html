@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- link to stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-    <!-- link to Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap"
-      rel="stylesheet"
-    />
 
-    <title>Game of Thrones Project</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- link to stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- link to Google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet" />
 
-  <body>
-    <main>
-      <h1>⚔️ Game of Thrones ⚔️</h1>
-      <p class="intro">
-        Do you love Game of Thrones? Find information about your favourite Game
-        of Thrones characters! Let's checkout Daenerys Targaryen. 🐉
-      </p>
+  <title>Game of Thrones Project</title>
+</head>
 
-      <form class="form_container" action="">
-        <label for="character_name"></label>
-        <input
-          class="user_input"
-          id="character_name"
-          type="text"
-          placeholder="GoT Character Name..."
-          name="character_name"
-          required
-        />
-        <button id="submit_button">Find</button>
-      </form>
-      <section class="container" id="GoT_information"></section>
-      <section class="container" id="TMDB_information">
-        <div class="RL_info_container" id="RL_info"></div>
-        <div class="Movie_info_container" id="Movie_info"></div>
-      </section>
-    </main>
-    <script src="main.js"></script>
-  </body>
+<body>
+  <main>
+    <h1>⚔️ Game of Thrones ⚔️</h1>
+    <p class="intro">
+      Do you love Game of Thrones? Find information about your favourite Game
+      of Thrones characters! Let's checkout Daenerys Targaryen. 🐉
+    </p>
+
+    <form class="form_container" action="">
+      <label for="character_name"></label>
+      <input class="user_input" id="character_name" type="text" placeholder="GoT Character Name..."
+        name="character_name" required />
+      <button id="submit_button">Find</button>
+    </form>
+    <section class="container" id="GoT_information"></section>
+    <section class="container" id="TMDB_information">
+      <div class="RL_info_container" id="RL_info"></div>
+      <div class="Movie_info_container" id="Movie_info"></div>
+    </section>
+  </main>
+  <script src="main.js"></script>
+</body>
+
 </html>

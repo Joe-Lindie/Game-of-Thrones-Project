@@ -58,9 +58,9 @@ form.addEventListener("submit", (event) => {
         .then((data) => {
           actorId = data["results"][0]["id"]
 
-          getPersonDetailByTMDB(actorId)
           getImgByTMDB(actorId)
           getMovieInfoByTMDB(actorId)
+          getPersonDetailByTMDB(actorId)
         })
     })
 })
@@ -74,11 +74,12 @@ const getPersonDetailByTMDB = (id) => {
   fetch(`${person_details}${id}?${api_key}&language=en-US`)
     .then((response) => response.json())
     .then((data) => {
-      const RL_info_header = document.createElement("h2")
-      RL_info_container.appendChild(RL_info_header)
-      RL_info_header.textContent = "Real info about the Actor"
+      // const RL_info_header = document.createElement("h2")
+      // RL_info_container.appendChild(RL_info_header)
+      // RL_info_header.textContent = "Real info of the Actor"
 
       const RL_container = document.createElement("div")
+      RL_container.setAttribute('class', 'RL_info')
       RL_info_container.appendChild(RL_container)
 
       const RL_name = document.createElement("p")
@@ -101,9 +102,13 @@ const getImgByTMDB = (id) => {
   fetch(`${person_details}${id}/images?${api_key}`)
     .then((response) => response.json())
     .then((data) => {
+      const RL_info_header = document.createElement("h2")
+      RL_info_container.appendChild(RL_info_header)
+      RL_info_header.textContent = "Real info of the Actor"
+
       const actor_img = document.createElement("IMG")
       actor_img.setAttribute("width", "20%")
-      gameOfThrones_data.append(actor_img)
+      RL_info_container.appendChild(actor_img)
       actor_img.src = `${person_img_location}${data["profiles"][0]["file_path"]}`
     })
     .catch(console.error)
@@ -116,23 +121,32 @@ const getMovieInfoByTMDB = (id) => {
       const movie_header = document.createElement("h2")
       Movie_info_container.appendChild(movie_header)
       movie_header.textContent = "Movies from the Actor"
+
+      const movie_box_container = document.createElement("div")
+      movie_box_container.setAttribute('class', 'movie_box_container')
+      Movie_info_container.appendChild(movie_box_container)
+
       data.cast.forEach((ele) => {
-        const movie_container = document.createElement("div")
-        Movie_info_container.appendChild(movie_container)
+        const movie_box = document.createElement("div")
+        movie_box.setAttribute('class', 'movie_box')
+        movie_box_container.appendChild(movie_box)
 
         const movie_poster = document.createElement("IMG")
-        movie_container.appendChild(movie_poster)
-        movie_poster.setAttribute("width", "25%")
+        movie_poster.setAttribute('class', 'movie_poster')
+        movie_box.appendChild(movie_poster)
+        movie_poster.setAttribute("width", "230px")
         if (ele["poster_path"] != null) {
           movie_poster.src = `${person_img_location}${ele["poster_path"]}`
+        } else {
+          movie_poster.src = `no_poster.png`
         }
 
         const movie_title = document.createElement("p")
-        movie_container.appendChild(movie_title)
-        movie_title.textContent = `Movie title: ${ele["title"]}`
+        movie_box.appendChild(movie_title)
+        movie_title.textContent = `<<${ele["title"]}>>`
 
         const movie_releaseDate = document.createElement("p")
-        movie_container.appendChild(movie_releaseDate)
+        movie_box.appendChild(movie_releaseDate)
         movie_releaseDate.textContent = `Release Date: ${ele["release_date"]}`
       })
     })
