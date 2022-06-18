@@ -55,7 +55,22 @@ p {
 }
 
 .character_introduction {
+    text-align: left;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+}
+
+#GoT_information {
     text-align: center;
+}
+
+.extracted_data_style {
+   font-weight: bold;
+}
+
+.invalid_entry {
+    color: red;
 }
 
 .RL_info_container {
