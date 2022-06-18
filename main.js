@@ -28,31 +28,68 @@ form.addEventListener("submit", (event) => {
         if (GoT[i]["culture"].length > 1) {
           gameOfThrones_culture = GoT[i]["culture"]
         }
+
+        if (GoT[i]["aliases"].length > 1) {
+          gameOfThrones_aliase = GoT[i]["aliases"].join(", ")
+        }
       }
 
       const gameOfThrones_character = GoT[0].name
       const gameOfThrones_DOB = GoT[0].born
       const gameOfThrones_title = GoT[0].titles.slice(-1)
 
-      // ACTOR'S / ACTRESS'S REAL NAME
+      // ACTOR'S/ACTRESS'S REAL NAME
       // CHARACTER'S DATE OF BIRTH
+      // CHARACTER'S ALIASES
       // CHARACTER'S TITLE
       // CHARACTER'S CULTURE
       // FIND OUT MORE ABOUT CHARACTER
 
       const nameEl = document.createElement("p")
       nameEl.className = "character_introduction"
-      const nameNode = document.createTextNode(
-        `${gameOfThrones_character} was played by ${realName}. 
-        ${gameOfThrones_character} was born ${gameOfThrones_DOB}. 
-        From the ${gameOfThrones_culture}'s culture and ${gameOfThrones_title}. 
-        Let's learn more about ${realName} rise to fame!`
-      )
+      nameEl.innerHTML = ` 
 
-      nameEl.appendChild(nameNode)
+      <span class='extracted_data_style'>${gameOfThrones_character} </span>   
+      was played by <span class='extracted_data_style'> ${realName} </span>. 
+      
+      <span class='extracted_data_style'>  ${gameOfThrones_character} </span>
+      was born <span class='extracted_data_style'> ${gameOfThrones_DOB}</span>. 
+      
+      From the <span class='extracted_data_style'> ${gameOfThrones_culture}'s </span> culture 
+      and  <span class='extracted_data_style'> ${gameOfThrones_title}</span>. 
+      
+  
+      <span class='extracted_data_style'> ${gameOfThrones_character} </span> 
+      is also known as <span class='extracted_data_style'>  ${gameOfThrones_aliase}</span>. 
+      
+      Let's learn more about <span class='extracted_data_style'>${realName}'s</span> rise to fame!  
+      
+      `
       gameOfThrones_data.appendChild(nameEl)
 
-      // get the ID from real Name
+      fetch(`https://www.anapioficeandfire.com/api/books`)
+        .then((response) => response.json())
+
+        .then((book) => {
+          console.log(book)
+          const author = book[0].authors[0]
+
+          const booksEl = document.createElement("p")
+          booksEl.className = "character_introduction"
+          booksEl.innerHTML = `  
+
+           You can read more about the author, 
+
+           <a href="https://en.wikipedia.org/wiki/George_R._R._Martin" target="_blank">
+           <span class='extracted_data_style'> ${author} </span>
+           </a>
+
+           here`
+
+          gameOfThrones_data.appendChild(booksEl)
+        })
+
+      // GET THE ID FROM REAL NAME
       fetch(`${search_person}${realName}`)
         .then((response) => response.json())
         .then((data) => {
@@ -62,6 +99,22 @@ form.addEventListener("submit", (event) => {
           getMovieInfoByTMDB(actorId)
           getPersonDetailByTMDB(actorId)
         })
+    })
+
+    .catch((error) => {
+      gameOfThrones_data.innerHTML = `
+      
+      The character <span class='invalid_entry'> ${userInput.value}</span> 
+      does not exist in our database 😥. Please try again! <br> <br>   
+      
+      Search Hints: <br><br> 
+      "Daenerys Targaryen" ✅
+      "Daenerys" ❌ <br> 
+      
+      "Jon Snow" ✅
+      "Jon" ❌
+      `
+      console.log(error)
     })
 })
 
@@ -79,7 +132,7 @@ const getPersonDetailByTMDB = (id) => {
       // RL_info_header.textContent = "Real info of the Actor"
 
       const RL_container = document.createElement("div")
-      RL_container.setAttribute('class', 'RL_info')
+      RL_container.setAttribute("class", "RL_info")
       RL_info_container.appendChild(RL_container)
 
       const RL_name = document.createElement("p")
@@ -102,7 +155,6 @@ const getImgByTMDB = (id) => {
   fetch(`${person_details}${id}/images?${api_key}`)
     .then((response) => response.json())
     .then((data) => {
-
       const RL_info_header = document.createElement("h2")
       RL_info_container.appendChild(RL_info_header)
       RL_info_header.textContent = "Real info of the Actor"
@@ -119,23 +171,22 @@ const getMovieInfoByTMDB = (id) => {
   fetch(`${person_details}${id}/movie_credits?${api_key}&language=en-US`)
     .then((response) => response.json())
     .then((data) => {
-
       const movie_header = document.createElement("h2")
       Movie_info_container.appendChild(movie_header)
       movie_header.textContent = "Movies from the Actor"
 
       const movie_box_container = document.createElement("div")
-      movie_box_container.setAttribute('class', 'movie_box_container')
+      movie_box_container.setAttribute("class", "movie_box_container")
       Movie_info_container.appendChild(movie_box_container)
 
       data.cast.forEach((ele) => {
         const movie_box = document.createElement("div")
-        movie_box.setAttribute('class', 'movie_box')
+        movie_box.setAttribute("class", "movie_box")
         movie_box_container.appendChild(movie_box)
 
         const movie_poster = document.createElement("IMG")
-        const IMDB_link = document.createElement('a')
-        movie_poster.setAttribute('class', 'movie_poster')
+        const IMDB_link = document.createElement("a")
+        movie_poster.setAttribute("class", "movie_poster")
         IMDB_link.appendChild(movie_poster)
         movie_box.appendChild(IMDB_link)
         movie_poster.setAttribute("width", "230px")
@@ -145,14 +196,15 @@ const getMovieInfoByTMDB = (id) => {
           movie_poster.src = `no_poster.png`
         }
 
-        fetch(`https://api.themoviedb.org/3/movie/${ele['id']}/external_ids?${api_key}`)
-          .then(response => response.json())
-          .then(data => {
-            if (ele['id'] == data['id']) {
-              IMDB_link.href = `https://www.imdb.com/title/${data.imdb_id}`;
+        fetch(
+          `https://api.themoviedb.org/3/movie/${ele["id"]}/external_ids?${api_key}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (ele["id"] == data["id"]) {
+              IMDB_link.href = `https://www.imdb.com/title/${data.imdb_id}`
             }
           })
-
 
         const movie_title = document.createElement("p")
         movie_box.appendChild(movie_title)

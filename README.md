@@ -16,4 +16,5 @@ You can find out site hosted [here!](https://joe-lindie.github.io/Game-of-Throne
 - This app uses the Game of Thrones API and TMDB API. 
 - The user can information about their favourite GoT character. 
 
-### **Sneak Peek** 
+### **Here's a Sneak Peek** 
+![](GoT.png)
