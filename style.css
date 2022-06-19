@@ -75,7 +75,7 @@ p {
     cursor: pointer;
 }
 
-.character_introduction{
+.character_introduction {
 
     text-align: left;
     margin-left: 2rem;
@@ -83,16 +83,17 @@ p {
     margin-bottom: 1rem;
 }
 
-.GoT_books li  {
+.GoT_books li {
     margin-left: 3rem;
-    color: black;
+    color: var(--yellow);
+    font-family: 'Roboto Slab', serif;
 }
 
 .GoT_books a {
     text-decoration: none;
 }
 
-.GoT_books li:hover  {
+.GoT_books li:hover {
     text-decoration: underline;
 }
 
@@ -101,10 +102,12 @@ p {
 }
 
 .extracted_data_style {
-   font-weight: bold;
-   text-decoration: none;
-   color: black;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--yellow);
+    font-family: 'Roboto Slab', serif;
 }
+
 
 .invalid_entry {
     color: red;
