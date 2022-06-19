@@ -17,4 +17,9 @@ You can find out site hosted [here!](https://joe-lindie.github.io/Game-of-Throne
 - The user can information about their favourite GoT character. 
 
 ### **Here's a Sneak Peek** 
-![](GoT.png)
+
+#### Desktop Layout 
+![](GoT_Desktop.png)
+
+#### Mobile Layout 
+![](GoT_Mobile.png)
