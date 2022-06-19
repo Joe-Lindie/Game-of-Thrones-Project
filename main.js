@@ -63,7 +63,6 @@ form.addEventListener("submit", (event) => {
       is also known as <span class='extracted_data_style'>  ${gameOfThrones_aliase}</span>. 
       
       Let's learn more about <span class='extracted_data_style'>${realName}'s</span> rise to fame!  
-      
       `
       gameOfThrones_data.appendChild(nameEl)
 
@@ -71,20 +70,49 @@ form.addEventListener("submit", (event) => {
         .then((response) => response.json())
 
         .then((book) => {
-          console.log(book)
+          // ALL GAMD OF THRONES BOOKS
+          function GoTbooks(book) {
+            let allBooks = []
+
+            for (let i = 0; i < book.length; i++) {
+              let books = book[i].name
+              allBooks.push(books)
+            }
+            return allBooks
+          }
+
           const author = book[0].authors[0]
+          const allBooks = GoTbooks(book)
+          console.log(allBooks)
 
           const booksEl = document.createElement("p")
           booksEl.className = "character_introduction"
           booksEl.innerHTML = `  
 
+           A Song of Ice and Fire is a series of 10 novels by  
+           <span class='extracted_data_style'> ${author} </span>.   
+
            You can read more about the author, 
 
-           <a href="https://en.wikipedia.org/wiki/George_R._R._Martin" target="_blank">
+           <a href="https://en.wikipedia.org/wiki/George_R._R._Martin">
            <span class='extracted_data_style'> ${author} </span>
-           </a>
+           </a> here. <br><br>
 
-           here`
+           Books
+
+           <span class='GoT_books'> <ol> </span>
+              <a href="https://en.wikipedia.org/wiki/A_Game_of_Thrones"><li>${allBooks[0]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Clash_of_Kings"><li>${allBooks[1]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Storm_of_Swords"><li>${allBooks[2]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Hedge_Knight"><li>${allBooks[3]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Feast_for_Crows"><li>${allBooks[4]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Sworn_Sword"><li>${allBooks[5]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Mystery_Knight"><li>${allBooks[6]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Dance_with_Dragons"><li>${allBooks[7]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/The_Princess_and_the_Queen"><li>${allBooks[8]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/The_Rogue_Prince"><li>${allBooks[9]}</li></a>
+            </ol>
+           `
 
           gameOfThrones_data.appendChild(booksEl)
         })

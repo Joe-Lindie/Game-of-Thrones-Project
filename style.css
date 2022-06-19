@@ -75,11 +75,25 @@ p {
     cursor: pointer;
 }
 
-.character_introduction {
+.character_introduction{
+
     text-align: left;
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 1rem;
+}
+
+.GoT_books li  {
+    margin-left: 3rem;
+    color: black;
+}
+
+.GoT_books a {
+    text-decoration: none;
+}
+
+.GoT_books li:hover  {
+    text-decoration: underline;
 }
 
 #GoT_information {
@@ -87,9 +101,9 @@ p {
 }
 
 .extracted_data_style {
-    font-weight: bold;
-    color: var(--yellow);
-    font-family: 'Roboto Slab', serif;
+   font-weight: bold;
+   text-decoration: none;
+   color: black;
 }
 
 .invalid_entry {
