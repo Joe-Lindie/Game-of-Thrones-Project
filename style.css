@@ -1,4 +1,17 @@
 /* BASIC STYLING FOR ALL ELEMENTS */
+:root {
+    --dark-blue: #1f3c4a;
+    --light-blue: #b4bfbf;
+    --beige: #f1d7b9;
+    --yellow: #fdf09e;
+    --white: rgb(255, 255, 255);
+    --black-fade: rgba(0, 0, 0, .7);
+    --overlay: var(--black-fade);
+    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Slab', serif;
+}
+
 html {
     box-sizing: border-box;
 }
@@ -14,15 +27,23 @@ html {
 body {
     font-family: 'Roboto', sans-serif;
     padding: 0.5rem;
+    background-color: var(--dark-blue);
+    color: var(--white);
 }
 
 /* MOBILE STYLING FOR 375 X 667 (IPHONE-SE) */
+h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 700;
+}
 
 h1,
 .intro {
     text-align: center;
     padding-top: 1rem;
-    font-weight: 400;
+    /* font-weight: 400;s */
+    font-family: 'Cinzel Decorative', cursive;
+
 }
 
 p {
@@ -48,7 +69,7 @@ p {
 }
 
 #submit_button {
-    padding: 0.2rem;
+    padding: 0.2rem 1.2rem 0.2rem;
     margin-bottom: 1rem;
     border-radius: 10px;
     cursor: pointer;
@@ -89,11 +110,25 @@ p {
     color: red;
 }
 
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(176, 176, 176, 0.75), rgba(0, 0, 0, 0));
+    width: 40%;
+    margin: 0.5rem auto 1.5rem;
+}
+
 .RL_info_container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 1rem 0;
+}
+
+.RL_info_container h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 700;
+    margin-top: 2rem;
 }
 
 .RL_info_container img {
@@ -103,12 +138,14 @@ p {
 
 .RL_info {
     text-align: center;
+
 }
 
 .Movie_info_container h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 700;
     text-align: center;
-    margin: 3rem 0;
-
+    margin-top: 2rem;
 }
 
 .movie_box_container {
@@ -124,6 +161,38 @@ p {
     justify-content: space-between;
     align-items: center;
 }
+
+.movie_box :nth-child(2) {
+    font-weight: bold;
+    font-size: 1.2rem;
+
+}
+
+.movie_box a {
+    position: relative;
+}
+
+.poster_overlay {
+    width: 220px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.612);
+    color: var(--dark-blue);
+    font-size: 2.5rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+
+}
+
+.poster_overlay:hover {
+    opacity: 1;
+
+}
+
 
 
 /* make the actor's pic and movie gird responsive */

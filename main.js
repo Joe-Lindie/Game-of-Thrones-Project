@@ -150,10 +150,10 @@ form.addEventListener("submit", (event) => {
 
 const RL_info_container = document.querySelector(".RL_info_container")
 const Movie_info_container = document.querySelector(".Movie_info_container")
-
 const getPersonDetailByTMDB = (id) => {
   fetch(`${person_details}${id}?${api_key}&language=en-US`)
     .then((response) => response.json())
+
     .then((data) => {
       // const RL_info_header = document.createElement("h2")
       // RL_info_container.appendChild(RL_info_header)
@@ -183,9 +183,14 @@ const getImgByTMDB = (id) => {
   fetch(`${person_details}${id}/images?${api_key}`)
     .then((response) => response.json())
     .then((data) => {
+
+
       const RL_info_header = document.createElement("h2")
       RL_info_container.appendChild(RL_info_header)
       RL_info_header.textContent = "Real info of the Actor"
+
+      const RL_hr = document.createElement("hr")
+      RL_info_container.appendChild(RL_hr)
 
       const actor_img = document.createElement("IMG")
       actor_img.setAttribute("width", "20%")
@@ -199,9 +204,14 @@ const getMovieInfoByTMDB = (id) => {
   fetch(`${person_details}${id}/movie_credits?${api_key}&language=en-US`)
     .then((response) => response.json())
     .then((data) => {
+
+
       const movie_header = document.createElement("h2")
       Movie_info_container.appendChild(movie_header)
       movie_header.textContent = "Movies from the Actor"
+
+      const RL_hr = document.createElement("hr")
+      Movie_info_container.appendChild(RL_hr)
 
       const movie_box_container = document.createElement("div")
       movie_box_container.setAttribute("class", "movie_box_container")
@@ -213,10 +223,14 @@ const getMovieInfoByTMDB = (id) => {
         movie_box_container.appendChild(movie_box)
 
         const movie_poster = document.createElement("IMG")
+        const IMDB_link_direct = document.createElement("p")
         const IMDB_link = document.createElement("a")
+        IMDB_link_direct.setAttribute("class", "poster_overlay")
         movie_poster.setAttribute("class", "movie_poster")
         IMDB_link.appendChild(movie_poster)
+        IMDB_link.appendChild(IMDB_link_direct)
         movie_box.appendChild(IMDB_link)
+        IMDB_link_direct.textContent = `Click to see more on IMDB`
         movie_poster.setAttribute("width", "230px")
         if (ele["poster_path"] != null) {
           movie_poster.src = `${person_img_location}${ele["poster_path"]}`
