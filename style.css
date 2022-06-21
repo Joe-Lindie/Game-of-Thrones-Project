@@ -53,6 +53,9 @@ p {
 
 .intro {
     font-weight: 300;
+    max-width: 65vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form_container {
@@ -167,7 +170,21 @@ hr {
 
 .movie_box :nth-child(2) {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+
+}
+
+.movie_poster {
+    border: 0.2px solid rgb(77, 77, 77);
+    border-radius: 1rem;
+    box-shadow: 5px 5px 15px rgb(106, 106, 106);
+    transition: width 0.5s;
+
+    /* box-shadow: 0 70px 63px -60px #000000 */
+}
+
+.movie_poster:hover {
+    width: 250px;
 
 }
 
@@ -177,7 +194,7 @@ hr {
 
 .poster_overlay {
     width: 220px;
-    height: 60px;
+    height: 30px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -191,9 +208,12 @@ hr {
 
 }
 
+.movie_poster:hover~.poster_overlay {
+    opacity: 1;
+}
+
 .poster_overlay:hover {
     opacity: 1;
-
 }
 
 
@@ -210,35 +230,46 @@ hr {
     }
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 415px) {
     .RL_info_container img {
-        width: 30%;
+        width: 45%;
     }
 
     .movie_box_container {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-}
 
-@media screen and (min-width: 992px) {
-    .RL_info_container img {
-        width: 25%;
+    @media screen and (min-width: 576px) {
+        .RL_info_container img {
+            width: 30%;
+        }
+
+        .movie_box_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 
-    .movie_box_container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
+    @media screen and (min-width: 992px) {
+        .RL_info_container img {
+            width: 25%;
+        }
 
-@media screen and (min-width: 1400px) {
-    .RL_info_container img {
-        width: 20%;
+        .movie_box_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
     }
 
-    .movie_box_container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media screen and (min-width: 1400px) {
+        .RL_info_container img {
+            width: 20%;
+        }
+
+        .movie_box_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
     }
 }
