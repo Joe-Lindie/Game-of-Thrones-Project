@@ -2,6 +2,9 @@
 const form = document.querySelector("form")
 const gameOfThrones_data = document.querySelector("#GoT_information")
 const userInput = document.querySelector("#character_name")
+const RL_info_container = document.querySelector(".RL_info_container")
+const Movie_info_container = document.querySelector(".Movie_info_container")
+
 //API LINKS FROM TMDB
 const template_link = "https://api.themoviedb.org/3"
 const api_key = "api_key=ec10365ffbcc2266acba94ede8276efe"
@@ -9,156 +12,129 @@ const search_person = template_link + "/search/person?" + api_key + "&query="
 const person_details = template_link + "/person/"
 const person_img_location = "https://image.tmdb.org/t/p/original"
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault()
-  // I made a funtion to clear the page each time before people search
-  clearPage()
+//FUNCTION FOR GoT CHARACTER DATA
+function characterData(data) {
+  let realName = ""
+  let gameOfThrones_culture = ""
+  let gameOfThrones_aliase = ""
+  let gameOfThrones_title = ""
+  const gameOfThrones_character = data[0].name
+  const gameOfThrones_DOB = data[0].born
 
-  // GAME OF THRONES API
-  fetch(`https://anapioficeandfire.com/api/characters?name=${userInput.value}`)
-    .then((response) => response.json())
+  for (let i = 0; i < data.length; i++) {
+    if (data[i]["playedBy"][0].length > 1) {
+      realName = data[i]["playedBy"][0]
+    }
 
-    .then((GoT) => {
-      // LOOP THROUGH DIFFERENT ARRAYS FOR REAL NAME AND CULTURE
-      for (let i = 0; i < GoT.length; i++) {
-        if (GoT[i]["playedBy"][0].length > 1) {
-          realName = GoT[i]["playedBy"][0]
-        }
+    if (data[i]["culture"].length > 1) {
+      gameOfThrones_culture = data[i]["culture"]
+    }
 
-        if (GoT[i]["culture"].length > 1) {
-          gameOfThrones_culture = GoT[i]["culture"]
-        }
+    if (data[i]["aliases"].length > 1) {
+      gameOfThrones_aliase = data[i]["aliases"].join(", ")
+    }
 
-        if (GoT[i]["aliases"].length > 1) {
-          gameOfThrones_aliase = GoT[i]["aliases"].join(", ")
-        }
-      }
+    if (data[i]["titles"].length > 0) {
+      gameOfThrones_title = data[i]["titles"].slice(-1).toString()
+    }
+  }
+  return {
+    gameOfThrones_aliase,
+    gameOfThrones_title,
+    gameOfThrones_DOB,
+    gameOfThrones_character,
+    realName,
+    gameOfThrones_culture,
+  }
+}
 
-      const gameOfThrones_character = GoT[0].name
-      const gameOfThrones_DOB = GoT[0].born
-      const gameOfThrones_title = GoT[0].titles.slice(-1)
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-      // ACTOR'S/ACTRESS'S REAL NAME
-      // CHARACTER'S DATE OF BIRTH
-      // CHARACTER'S ALIASES
-      // CHARACTER'S TITLE
-      // CHARACTER'S CULTURE
-      // FIND OUT MORE ABOUT CHARACTER
+//FUNCTION TO CREATE INTRODUCTION HTML
 
-      const nameEl = document.createElement("p")
-      nameEl.className = "character_introduction"
-      nameEl.innerHTML = ` 
+function createIntro(obj) {
+  const nameEl = document.createElement("p")
+  nameEl.className = "character_introduction"
+  nameEl.innerHTML = ` 
 
-      <span class='extracted_data_style'>${gameOfThrones_character} </span>   
-      was played by <span class='extracted_data_style'> ${realName} </span>. 
-      
-      <span class='extracted_data_style'>  ${gameOfThrones_character} </span>
-      was born <span class='extracted_data_style'> ${gameOfThrones_DOB}</span>. 
-      
-      From the <span class='extracted_data_style'> ${gameOfThrones_culture}'s </span> culture 
-      and  <span class='extracted_data_style'> ${gameOfThrones_title}</span>. 
-      
+  <span class='extracted_data_style'>${obj.gameOfThrones_character} </span>   
+  was played by <span class='extracted_data_style'> ${obj.realName} </span>. 
   
-      <span class='extracted_data_style'> ${gameOfThrones_character} </span> 
-      is also known as <span class='extracted_data_style'>  ${gameOfThrones_aliase}</span>. 
-      
-      Let's learn more about <span class='extracted_data_style'>${realName}'s</span> rise to fame!  
-      `
-      gameOfThrones_data.appendChild(nameEl)
+  <span class='extracted_data_style'>  ${obj.gameOfThrones_character} </span>
+  was born <span class='extracted_data_style'> ${obj.gameOfThrones_DOB}</span>. 
+  
+  From the <span class='extracted_data_style'> ${obj.gameOfThrones_culture}'s </span> culture 
+  and  <span class='extracted_data_style'> ${obj.gameOfThrones_title}</span>. 
+  
 
-      fetch(`https://www.anapioficeandfire.com/api/books`)
-        .then((response) => response.json())
+  <span class='extracted_data_style'> ${obj.gameOfThrones_character} </span> 
+  is also known as <span class='extracted_data_style'>  ${obj.gameOfThrones_aliase}</span>. 
+  
+  Let's learn more about <span class='extracted_data_style'>${obj.realName}'s</span> rise to fame!  
+  `
+  gameOfThrones_data.appendChild(nameEl)
+}
 
-        .then((book) => {
-          // ALL GAMD OF THRONES BOOKS
-          function GoTbooks(book) {
-            let allBooks = []
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-            for (let i = 0; i < book.length; i++) {
-              let books = book[i].name
-              allBooks.push(books)
-            }
-            return allBooks
-          }
+//GET GAME OF THRONES BOOKS FUNCTION
 
-          const author = book[0].authors[0]
-          const allBooks = GoTbooks(book)
-          console.log(allBooks)
+function getBooks(obj) {
+  let allBooks = []
+  const author = obj[0].authors[0]
 
-          const booksEl = document.createElement("p")
-          booksEl.className = "character_introduction"
-          booksEl.innerHTML = `  
+  for (let i = 0; i < obj.length; i++) {
+    let books = obj[i].name
+    allBooks.push(books)
+  }
+  return { allBooks, author }
+}
+
+function createBooks(obj) {
+  const booksEl = document.createElement("p")
+  booksEl.className = "character_introduction"
+  booksEl.innerHTML = `  
 
            A Song of Ice and Fire is a series of 10 novels by  
-           <span class='extracted_data_style'> ${author} </span>.   
+           <span class='extracted_data_style'> ${obj.author} </span>.   
 
            You can read more about the author, 
 
            <a href="https://en.wikipedia.org/wiki/George_R._R._Martin">
-           <span class='extracted_data_style'> ${author} </span>
+           <span class='extracted_data_style'> ${obj.author} </span>
            </a> here. <br><br>
 
            Books
 
            <span class='GoT_books'> <ol> </span>
-              <a href="https://en.wikipedia.org/wiki/A_Game_of_Thrones"><li>${allBooks[0]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/A_Clash_of_Kings"><li>${allBooks[1]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/A_Storm_of_Swords"><li>${allBooks[2]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Hedge_Knight"><li>${allBooks[3]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/A_Feast_for_Crows"><li>${allBooks[4]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Sworn_Sword"><li>${allBooks[5]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Mystery_Knight"><li>${allBooks[6]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/A_Dance_with_Dragons"><li>${allBooks[7]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/The_Princess_and_the_Queen"><li>${allBooks[8]}</li></a>
-              <a href="https://en.wikipedia.org/wiki/The_Rogue_Prince"><li>${allBooks[9]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Game_of_Thrones"><li>${obj.allBooks[0]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Clash_of_Kings"><li>${obj.allBooks[1]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Storm_of_Swords"><li>${obj.allBooks[2]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Hedge_Knight"><li>${obj.allBooks[3]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Feast_for_Crows"><li>${obj.allBooks[4]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Sworn_Sword"><li>${obj.allBooks[5]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/Tales_of_Dunk_and_Egg#The_Mystery_Knight"><li>${obj.allBooks[6]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/A_Dance_with_Dragons"><li>${obj.allBooks[7]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/The_Princess_and_the_Queen"><li>${obj.allBooks[8]}</li></a>
+              <a href="https://en.wikipedia.org/wiki/The_Rogue_Prince"><li>${obj.allBooks[9]}</li></a>
             </ol>
            `
 
-          gameOfThrones_data.appendChild(booksEl)
-        })
+  gameOfThrones_data.appendChild(booksEl)
+}
 
-      // GET THE ID FROM REAL NAME
-      fetch(`${search_person}${realName}`)
-        .then((response) => response.json())
-        .then((data) => {
-          actorId = data["results"][0]["id"]
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-          getImgByTMDB(actorId)
-          getMovieInfoByTMDB(actorId)
-          getPersonDetailByTMDB(actorId)
-        })
-    })
+//FUNCTION FOR GETTING PERSONAL DATA FROM TMDB
 
-    .catch((error) => {
-      gameOfThrones_data.innerHTML = `
-      
-      The character <span class='invalid_entry'> ${userInput.value}</span> 
-      does not exist in our database 😥. Please try again! <br> <br>   
-      
-      Search Hints: <br><br> 
-      "Daenerys Targaryen" ✅
-      "Daenerys" ❌ <br> 
-      
-      "Jon Snow" ✅
-      "Jon" ❌
-      `
-      console.log(error)
-    })
-})
-
-// functions to get info from TMDB and add to the html page
-
-const RL_info_container = document.querySelector(".RL_info_container")
-const Movie_info_container = document.querySelector(".Movie_info_container")
 const getPersonDetailByTMDB = (id) => {
   fetch(`${person_details}${id}?${api_key}&language=en-US`)
     .then((response) => response.json())
 
     .then((data) => {
-      // const RL_info_header = document.createElement("h2")
-      // RL_info_container.appendChild(RL_info_header)
-      // RL_info_header.textContent = "Real info of the Actor"
-
       const RL_container = document.createElement("div")
       RL_container.setAttribute("class", "RL_info")
       RL_info_container.appendChild(RL_container)
@@ -179,12 +155,16 @@ const getPersonDetailByTMDB = (id) => {
     })
     .catch(console.error)
 }
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+//FUNCTION TO GET IMAGE FROM TMDB
+
 const getImgByTMDB = (id) => {
   fetch(`${person_details}${id}/images?${api_key}`)
     .then((response) => response.json())
     .then((data) => {
-
-
       const RL_info_header = document.createElement("h2")
       RL_info_container.appendChild(RL_info_header)
       RL_info_header.textContent = "Real info of the Actor"
@@ -200,12 +180,14 @@ const getImgByTMDB = (id) => {
     .catch(console.error)
 }
 
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+//FUNCTION TO GET ALL MOVIE DATA
 const getMovieInfoByTMDB = (id) => {
   fetch(`${person_details}${id}/movie_credits?${api_key}&language=en-US`)
     .then((response) => response.json())
     .then((data) => {
-
-
       const movie_header = document.createElement("h2")
       Movie_info_container.appendChild(movie_header)
       movie_header.textContent = "Movies from the Actor"
@@ -232,6 +214,7 @@ const getMovieInfoByTMDB = (id) => {
         movie_box.appendChild(IMDB_link)
         IMDB_link_direct.textContent = `Click to see more on IMDB`
         movie_poster.setAttribute("width", "230px")
+
         if (ele["poster_path"] != null) {
           movie_poster.src = `${person_img_location}${ele["poster_path"]}`
         } else {
@@ -260,7 +243,11 @@ const getMovieInfoByTMDB = (id) => {
     .catch(console.error)
 }
 
-// clear the content before search again
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+// CLEAR THE CONTENT BEFORE SEARCH AGAIN
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild)
@@ -272,3 +259,56 @@ function clearPage() {
   removeAllChildNodes(Movie_info_container)
   removeAllChildNodes(gameOfThrones_data)
 }
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault()
+
+  clearPage()
+
+  // GAME OF THRONES API
+  fetch(`https://anapioficeandfire.com/api/characters?name=${userInput.value}`)
+    .then((response) => response.json())
+
+    .then((GoT) => {
+      let data = characterData(GoT)
+      createIntro(data)
+
+      fetch(`https://www.anapioficeandfire.com/api/books`)
+        .then((response) => response.json())
+
+        .then((book) => {
+          let booksData = getBooks(book)
+          createBooks(booksData)
+        })
+
+      // GET THE ID FROM REAL NAME
+      fetch(`${search_person}${data.realName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          actorId = data["results"][0]["id"]
+
+          getImgByTMDB(actorId)
+          getMovieInfoByTMDB(actorId)
+          getPersonDetailByTMDB(actorId)
+        })
+    })
+
+    .catch((error) => {
+      gameOfThrones_data.innerHTML = `
+      
+      The character <span class='invalid_entry'> ${userInput.value}</span> 
+      does not exist in our database 😥. Please try again! <br> <br>   
+      
+      Search Hints: <br><br> 
+      "Daenerys Targaryen" ✅
+      "Daenerys" ❌ <br> 
+      
+      "Jon Snow" ✅
+      "Jon" ❌
+      `
+      console.log(error)
+    })
+})
