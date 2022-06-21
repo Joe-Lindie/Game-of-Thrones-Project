@@ -238,6 +238,7 @@ const getMovieInfoByTMDB = (id) => {
 
         if (ele["poster_path"] != null) {
           movie_poster.src = `${person_img_location}${ele["poster_path"]}`
+          movie_poster.alt = `${ele["title"]}`
         } else {
           movie_poster.src = `no_poster.png`
         }
