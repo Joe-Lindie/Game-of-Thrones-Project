@@ -71,6 +71,13 @@ p {
     border-radius: 10px;
 }
 
+.option_style *
+{
+ border-radius: 15px;
+ background-color: red;
+}
+
+
 #submit_button {
     padding: 0.2rem 1.2rem 0.2rem;
     margin-bottom: 1rem;
