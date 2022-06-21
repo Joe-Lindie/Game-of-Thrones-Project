@@ -2,6 +2,8 @@
 const form = document.querySelector("form")
 const gameOfThrones_data = document.querySelector("#GoT_information")
 const userInput = document.querySelector("#character_name")
+const submitButton = document.getElementById("submit_button")
+const dropdown = document.getElementById("dropdown")
 const RL_info_container = document.querySelector(".RL_info_container")
 const Movie_info_container = document.querySelector(".Movie_info_container")
 
@@ -55,9 +57,11 @@ function characterData(data) {
 const getallName = () => {
   let allName = []
   for (let i = 1; i <= 43; i++) {
-    fetch(`https://www.anapioficeandfire.com/api/characters?page=${i}&pageSize=50`)
-      .then(response => response.json())
-      .then(data => {
+    fetch(
+      `https://www.anapioficeandfire.com/api/characters?page=${i}&pageSize=50`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         for (let j = 0; j <= 50; j++) {
           if (data[j].name.length > 0) {
             allName.push(data[j].name)
@@ -67,7 +71,37 @@ const getallName = () => {
   }
   return allName
 }
-const allNames = getallName()
+
+// FUNCTION FOR DROP DOWN MENU
+
+let testNames = [
+  "Daenerys Targaryen",
+  "Jon Snow",
+  "Jon something",
+  "Tyrion Lannisterj",
+  "Arya Stark",
+]
+
+function dropDownMenu() {
+  const allNames = getallName()
+
+  userInput.addEventListener("keyup", (event) => {
+    const searchName = event.target.value.toUpperCase()
+
+    const filteredChar = testNames.filter((character) => {
+      return character.toUpperCase().includes(searchName)
+    })
+    console.log(filteredChar)
+
+    for (let i = 0; i < testNames.length; i++) {
+      const option_value = document.createElement("option")
+      option_value.innerHTML = testNames[i]
+      dropdown.appendChild(option_value)
+    }
+  })
+}
+
+dropDownMenu()
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
