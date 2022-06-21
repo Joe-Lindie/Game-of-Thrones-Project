@@ -63,10 +63,9 @@ const getallName = () => {
       .then((response) => response.json())
       .then((data) => {
         for (let j = 0; j < data.length; j++) {
-          if ((data[j]['name']).length > 0 && data[j]["playedBy"][0].length > 1) {
-            allName.push(data[j]['name'])
+          if (data[j]["name"].length > 0 && data[j]["playedBy"][0].length > 1) {
+            allName.push(data[j]["name"])
           }
-
         }
       })
   }
@@ -75,7 +74,6 @@ const getallName = () => {
 
 function dropDownMenu() {
   const allNames = getallName()
-  console.log(allNames)
 
   userInput.addEventListener("keyup", (event) => {
     removeAllChildNodes(dropdown)
@@ -352,17 +350,21 @@ form.addEventListener("submit", (event) => {
     })
 
     .catch((error) => {
+      const userGuess = userInput.value
+      const firstLetter = userGuess.substring(0, 1).toUpperCase()
+
       gameOfThrones_data.innerHTML = `
       
-      The character <span class='invalid_entry'> ${userInput.value}</span> 
-      does not exist in our database 😥. Please try again! <br> <br>   
-      
+      The character <span class='invalid_entry'> ${userGuess}</span> 
+      does not exist in our database 😥. Please try again! <br> <br>  
+    
       Search Hints: <br><br> 
       "Daenerys Targaryen" ✅
-      "Daenerys" ❌ <br> 
-      
-      "Jon Snow" ✅
-      "Jon" ❌
+      "Daenerys" ❌ <br><br>  
+
+      To find a character with the letter 
+      <span class='invalid_entry'>${firstLetter}</span> 
+      in it, simply type the letter in and use our auto fill menu.
       `
       console.log(error)
     })
