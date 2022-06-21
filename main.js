@@ -62,10 +62,11 @@ const getallName = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        for (let j = 0; j <= 50; j++) {
-          if (data[j].name.length > 0) {
-            allName.push(data[j].name)
+        for (let j = 0; j < data.length; j++) {
+          if ((data[j]['name']).length > 0) {
+            allName.push(data[j]['name'])
           }
+
         }
       })
   }
@@ -74,28 +75,28 @@ const getallName = () => {
 
 // FUNCTION FOR DROP DOWN MENU
 
-let testNames = [
-  "Daenerys Targaryen",
-  "Jon Snow",
-  "Jon something",
-  "Tyrion Lannisterj",
-  "Arya Stark",
-]
+// let testNames = [
+//   "Daenerys Targaryen",
+//   "Jon Snow",
+//   "Jon something",
+//   "Tyrion Lannisterj",
+//   "Arya Stark",
+// ]
 
 function dropDownMenu() {
   const allNames = getallName()
-
+  
   userInput.addEventListener("keyup", (event) => {
+    removeAllChildNodes(dropdown)
     const searchName = event.target.value.toUpperCase()
 
-    const filteredChar = testNames.filter((character) => {
+    const filteredChar = allNames.filter((character) => {
       return character.toUpperCase().includes(searchName)
     })
-    console.log(filteredChar)
 
-    for (let i = 0; i < testNames.length; i++) {
+    for (let i = 0; i < filteredChar.length; i++) {
       const option_value = document.createElement("option")
-      option_value.innerHTML = testNames[i]
+      option_value.innerHTML = filteredChar[i]
       dropdown.appendChild(option_value)
     }
   })
