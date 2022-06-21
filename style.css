@@ -1,7 +1,8 @@
 /* BASIC STYLING FOR ALL ELEMENTS */
 :root {
     --dark-blue: #1f3c4a;
-    --light-blue: #b4bfbf;
+    --light-grey: #dedede;
+    --light-grey-transparent: #ffffff4d;
     --beige: #f1d7b9;
     --yellow: #fdf09e;
     --white: rgb(255, 255, 255);
@@ -14,6 +15,8 @@
 
 html {
     box-sizing: border-box;
+    position: relative;
+    min-height: 100%;
 }
 
 *,
@@ -44,6 +47,13 @@ h1,
     /* font-weight: 400;s */
     font-family: 'Cinzel Decorative', cursive;
 
+}
+
+h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 700;
+    margin-top: 2rem;
+    text-align: center;
 }
 
 p {
@@ -81,13 +91,19 @@ p {
 .character_introduction {
 
     text-align: left;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 3.5rem;
+    margin-right: 3.5rem;
     margin-bottom: 1rem;
 }
 
+.GoT_books {
+    text-align: center;
+    list-style-position: inside;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .GoT_books li {
-    margin-left: 3rem;
     color: var(--yellow);
     font-family: 'Roboto Slab', serif;
 }
@@ -121,7 +137,7 @@ hr {
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(176, 176, 176, 0.75), rgba(0, 0, 0, 0));
     width: 40%;
-    margin: 0.5rem auto 1.5rem;
+    margin: 0.5rem auto 1.8rem;
 }
 
 .RL_info_container {
@@ -131,11 +147,6 @@ hr {
     margin: 1rem 0;
 }
 
-.RL_info_container h2 {
-    font-family: 'Cinzel Decorative', cursive;
-    font-weight: 700;
-    margin-top: 2rem;
-}
 
 .RL_info_container img {
     border-radius: 0.5rem;
@@ -147,11 +158,8 @@ hr {
 
 }
 
-.Movie_info_container h2 {
-    font-family: 'Cinzel Decorative', cursive;
-    font-weight: 700;
-    text-align: center;
-    margin-top: 2rem;
+#TMDB_information {
+    margin-bottom: 5rem;
 }
 
 .movie_box_container {
@@ -216,7 +224,22 @@ hr {
     opacity: 1;
 }
 
+footer {
+    text-align: center;
+    position: absolute;
+    height: 3rem;
+    background: var(--light-grey-transparent);
+    font-size: 0.85rem;
+    color: rgb(198, 198, 198);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* transform: translateY(100%); */
+}
 
+footer a {
+    text-decoration: none;
+}
 
 /* make the actor's pic and movie gird responsive */
 @media screen and (min-width: 0px) {
@@ -228,6 +251,7 @@ hr {
         display: flex;
         flex-direction: column;
     }
+
 }
 
 @media screen and (min-width: 415px) {
@@ -240,36 +264,37 @@ hr {
         grid-template-columns: 1fr 1fr;
     }
 
-    @media screen and (min-width: 576px) {
-        .RL_info_container img {
-            width: 30%;
-        }
+}
 
-        .movie_box_container {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-        }
+@media screen and (min-width: 576px) {
+    .RL_info_container img {
+        width: 30%;
     }
 
-    @media screen and (min-width: 992px) {
-        .RL_info_container img {
-            width: 25%;
-        }
+    .movie_box_container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
 
-        .movie_box_container {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
+@media screen and (min-width: 992px) {
+    .RL_info_container img {
+        width: 25%;
     }
 
-    @media screen and (min-width: 1400px) {
-        .RL_info_container img {
-            width: 20%;
-        }
+    .movie_box_container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
 
-        .movie_box_container {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        }
+@media screen and (min-width: 1400px) {
+    .RL_info_container img {
+        width: 20%;
+    }
+
+    .movie_box_container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 }

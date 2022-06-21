@@ -73,16 +73,6 @@ const getallName = () => {
   return allName
 }
 
-// FUNCTION FOR DROP DOWN MENU
-
-// let testNames = [
-//   "Daenerys Targaryen",
-//   "Jon Snow",
-//   "Jon something",
-//   "Tyrion Lannisterj",
-//   "Arya Stark",
-// ]
-
 function dropDownMenu() {
   const allNames = getallName()
   console.log(allNames)
@@ -114,7 +104,8 @@ function createIntro(obj) {
   const nameEl = document.createElement("p")
   nameEl.className = "character_introduction"
   nameEl.innerHTML = ` 
-
+  <h2> GOT info of the actor</h2>
+  <hr>
   <span class='extracted_data_style'>${obj.gameOfThrones_character} </span>   
   was played by <span class='extracted_data_style'> ${obj.realName} </span>. 
   
@@ -161,11 +152,12 @@ function createBooks(obj) {
 
            <a href="https://en.wikipedia.org/wiki/George_R._R._Martin">
            <span class='extracted_data_style'> ${obj.author} </span>
-           </a> here. <br><br>
+           </a> here. <br>
 
-           Books
+           <h2>Books</h2>
+           <hr>
 
-           <span class='GoT_books'> <ol> </span>
+           <ol class='GoT_books'>
               <a href="https://en.wikipedia.org/wiki/A_Game_of_Thrones"><li>${obj.allBooks[0]}</li></a>
               <a href="https://en.wikipedia.org/wiki/A_Clash_of_Kings"><li>${obj.allBooks[1]}</li></a>
               <a href="https://en.wikipedia.org/wiki/A_Storm_of_Swords"><li>${obj.allBooks[2]}</li></a>
@@ -187,18 +179,21 @@ function createBooks(obj) {
 
 //FUNCTION FOR GETTING PERSONAL DATA FROM TMDB
 
-const getPersonDetailByTMDB = (id) => {
-  fetch(`${person_details}${id}?${api_key}&language=en-US`)
+const getPersonDetailByTMDB = async (id) => {
+  await fetch(`${person_details}${id}?${api_key}&language=en-US`)
     .then((response) => response.json())
 
     .then((data) => {
+      const actor_img = document.querySelector('.actor_img')
       const RL_container = document.createElement("div")
       RL_container.setAttribute("class", "RL_info")
-      RL_info_container.appendChild(RL_container)
+      actor_img.after(RL_container)
+
 
       const RL_name = document.createElement("p")
       RL_container.appendChild(RL_name)
       RL_name.textContent = `Name: ${data["name"]}`
+      actor_img.alt = `${data["name"]}`
 
       const RL_DOB = document.createElement("p")
       RL_container.appendChild(RL_DOB)
@@ -231,8 +226,10 @@ const getImgByTMDB = (id) => {
 
       const actor_img = document.createElement("IMG")
       actor_img.setAttribute("width", "20%")
+      actor_img.setAttribute("class", "actor_img")
       RL_info_container.appendChild(actor_img)
       actor_img.src = `${person_img_location}${data["profiles"][0]["file_path"]}`
+
     })
     .catch(console.error)
 }
@@ -341,13 +338,13 @@ form.addEventListener("submit", (event) => {
           let booksData = getBooks(book)
           createBooks(booksData)
         })
-
+      let actorId = ''
       // GET THE ID FROM REAL NAME
       fetch(`${search_person}${data.realName}`)
+
         .then((response) => response.json())
         .then((data) => {
           actorId = data["results"][0]["id"]
-
           getImgByTMDB(actorId)
           getMovieInfoByTMDB(actorId)
           getPersonDetailByTMDB(actorId)
