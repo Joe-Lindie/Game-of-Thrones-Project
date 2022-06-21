@@ -63,7 +63,7 @@ const getallName = () => {
       .then((response) => response.json())
       .then((data) => {
         for (let j = 0; j < data.length; j++) {
-          if ((data[j]['name']).length > 0) {
+          if ((data[j]['name']).length > 0 && data[j]["playedBy"][0].length > 1) {
             allName.push(data[j]['name'])
           }
 
@@ -85,7 +85,8 @@ const getallName = () => {
 
 function dropDownMenu() {
   const allNames = getallName()
-  
+  console.log(allNames)
+
   userInput.addEventListener("keyup", (event) => {
     removeAllChildNodes(dropdown)
     const searchName = event.target.value.toUpperCase()
