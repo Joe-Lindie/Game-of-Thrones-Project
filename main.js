@@ -51,6 +51,27 @@ function characterData(data) {
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
+// FUNCTION TO GET ALL NAMES
+const getallName = () => {
+  let allName = []
+  for (let i = 1; i <= 43; i++) {
+    fetch(`https://www.anapioficeandfire.com/api/characters?page=${i}&pageSize=50`)
+      .then(response => response.json())
+      .then(data => {
+        for (let j = 0; j <= 50; j++) {
+          if (data[j].name.length > 0) {
+            allName.push(data[j].name)
+          }
+        }
+      })
+  }
+  return allName
+}
+const allNames = getallName()
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
 //FUNCTION TO CREATE INTRODUCTION HTML
 
 function createIntro(obj) {
