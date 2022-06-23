@@ -8,18 +8,18 @@ The user can search for their favourite Game of Thrones character using the sear
 
 The user can then find more information about the person who starred in that role. It will return movies they starred in, release dates, movie posters, images, and more. It will also link to IMDb for the user to find out more information. 
 
-You can find out site hosted [here!](https://joe-lindie.github.io/Game-of-Thrones-Project/)
+You can find our site hosted [here!](https://fac25.github.io/Week5-http-project-Joe-Abby/)
 
-### **Accessibility / APIs:** 
+### **User Story** 
+- [x] The user can access this application on both mobile and desktop devices. 
+- [x] The user can see an interesting mashup of Game of Thrones and movie data.  
+- [x] The user will be notified when something goes wrong.  
 
-- The user can access this app on both mobile and desktop devices. 
-- This app uses the Game of Thrones API and TMDB API. 
-- The user can information about their favourite GoT character. 
-
+### **Acceptance Criteria** 
+ - [x] This app uses the [Game of Thrones](https://anapioficeandfire.com/) API and [TMDB](https://www.themoviedb.org/documentation/api) API. 
+- [x] The content is dynamically generated with JS.
+- [x] Our app is accessible to many different users.
 ### **Here's a Sneak Peek** 
 
 #### Desktop Layout 
 ![](GoT_Desktop.png)
-
-#### Mobile Layout 
-![](GoT_Mobile.png)
